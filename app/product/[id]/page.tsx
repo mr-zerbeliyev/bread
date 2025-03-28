@@ -1,11 +1,14 @@
 import Image from "next/image";
 import { Product } from "@/app/types/product";
-import productData from "@/public/data/product.json";
 import { Metadata } from "next";
+import path from 'path';
+import fs from 'fs/promises';
 
 async function getProduct(id: string): Promise<Product | null> {
   try {
-    const products: Product[] = productData;
+    const filePath = path.join(process.cwd(), 'public', 'data', 'product.json');
+    const jsonData = await fs.readFile(filePath, 'utf8');
+    const products: Product[] = JSON.parse(jsonData);
     const product = products.find(p => p.id.toString() === id);
     return product || null;
   } catch (error) {
@@ -22,13 +25,11 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
   };
 }
 
-type Props = {
-  params: {
-    id: string;
-  };
-};
+interface PageProps {
+  params: { id: string };
+}
 
-export default async function ProductPage({ params }: Props) {
+export default async function ProductPage({ params }: PageProps) {
   const product = await getProduct(params.id);
 
   if (!product) {
