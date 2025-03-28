@@ -9,7 +9,7 @@ import {
   Typography, 
   Box, 
   Button,
-  Grid,
+  Grid as MuiGrid,
   Card,
   CardMedia,
   CardContent,
@@ -41,6 +41,8 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
 interface PageProps {
   params: { id: string };
 }
+
+const Grid = MuiGrid as any; // Geçici tip çözümü
 
 export default async function ProductPage({ params }: PageProps) {
   const product = await getProduct(params.id);
