@@ -22,11 +22,13 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
   };
 }
 
-export default async function ProductPage({
-  params,
-}: {
-  params: { id: string };
-}) {
+type Props = {
+  params: {
+    id: string;
+  };
+};
+
+export default async function ProductPage({ params }: Props) {
   const product = await getProduct(params.id);
 
   if (!product) {
