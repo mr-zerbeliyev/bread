@@ -17,8 +17,9 @@ async function getProduct(id: string): Promise<Product | null> {
   }
 }
 
-export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
-  const product = await getProduct(params.id);
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
+  const resolvedParams = await params;
+  const product = await getProduct(resolvedParams.id);
   return {
     title: product ? product.name : 'Ürün Bulunamadı',
     description: product ? product.description : 'Ürün bulunamadı',
@@ -26,11 +27,12 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
 }
 
 interface PageProps {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
 
 export default async function ProductPage({ params }: PageProps) {
-  const product = await getProduct(params.id);
+  const resolvedParams = await params;
+  const product = await getProduct(resolvedParams.id);
 
   if (!product) {
     return (
