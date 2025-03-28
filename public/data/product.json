@@ -1,0 +1,82 @@
+[
+    {
+        "id": 1,
+        "name": "Çoban Salatı",
+        "description": "Təzə pomidor, xiyar və bibər ilə hazırlanan ənənəvi Türk salatı.",
+        "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop&q=60",
+        "price": 12.99,
+        "category": "Salatlar"
+    },
+    {
+        "id": 2,
+        "name": "Sezar Salatı",
+        "description": "Romalı kahı, parmesan pendiri və kruton ilə hazırlanan Sezar salatı.",
+        "image": "https://images.unsplash.com/photo-1546793665-c74683f339c1?w=800&auto=format&fit=crop&q=60",
+        "price": 14.99,
+        "category": "Salatlar"
+    },
+    {
+        "id": 3,
+        "name": "Pendirli Çörək Sandviç",
+        "description": "Qıtır çörək içində təzə pendir və tərəvəzlər ilə hazırlanan sandviç.",
+        "image": "https://images.unsplash.com/photo-1603064752734-4c48eff53d05?w=800&auto=format&fit=crop&q=60",
+        "price": 9.99,
+        "category": "Çörək Sandviç"
+    },
+    {
+        "id": 4,
+        "name": "Hinduşka Fümeli Çörək Sandviç",
+        "description": "Hinduşka füme və yaşıl tərəvəzlər ilə hazırlanan çörək sandviç.",
+        "image": "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=800&auto=format&fit=crop&q=60",
+        "price": 10.99,
+        "category": "Çörək Sandviç"
+    },
+    {
+        "id": 5,
+        "name": "Toyuqlu Roll Sandviç",
+        "description": "Toyuq parçaları və tərəvəzlər ilə dolu roll sandviç.",
+        "image": "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=800&auto=format&fit=crop&q=60",
+        "price": 11.99,
+        "category": "Roll Sandviç"
+    },
+    {
+        "id": 6,
+        "name": "Tərəvəzli Roll Sandviç",
+        "description": "Müxtəlif təzə tərəvəzlər ilə hazırlanan roll sandviç.",
+        "image": "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=800&auto=format&fit=crop&q=60",
+        "price": 10.49,
+        "category": "Roll Sandviç"
+    },
+    {
+        "id": 7,
+        "name": "Klassik Klub Sandviç",
+        "description": "Üçqat klassik klub sandviç, toyuq, pomidor, kahı və mayonez ilə hazırlanmış.",
+        "image": "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=800&auto=format&fit=crop&q=60",
+        "price": 15.99,
+        "category": "Klub Sandviç"
+    },
+    {
+        "id": 8,
+        "name": "Pastırmalı Klub Sandviç",
+        "description": "Pastırma, pendir və təzə tərəvəzlər ilə hazırlanmış klub sandviç.",
+        "image": "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=800&auto=format&fit=crop&q=60",
+        "price": 16.99,
+        "category": "Klub Sandviç"
+    },
+    {
+        "id": 9,
+        "name": "Pendirli Kruvasan Sandviç",
+        "description": "Kərəyağlı kruvasan içində pendir və təzə tərəvəzlər ilə hazırlanmış sandviç.",
+        "image": "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=800&auto=format&fit=crop&q=60",
+        "price": 13.49,
+        "category": "Kruvasan Sandviç"
+    },
+    {
+        "id": 10,
+        "name": "Jambonlu Kruvasan Sandviç",
+        "description": "Jambon və pendir dolu kruvasan sandviç.",
+        "image": "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=800&auto=format&fit=crop&q=60",
+        "price": 14.49,
+        "category": "Kruvasan Sandviç"
+    }
+]
