@@ -1,3 +1,6 @@
+'use client';
+
+import React from 'react';
 import Image from "next/image";
 import { Product } from "@/app/types/product";
 import { Metadata } from "next";
@@ -9,7 +12,7 @@ import {
   Typography, 
   Box, 
   Button,
-  Grid as MuiGrid,
+  Grid,
   Card,
   CardMedia,
   CardContent,
@@ -42,10 +45,33 @@ interface PageProps {
   params: { id: string };
 }
 
-const Grid = MuiGrid as any; // Geçici tip çözümü
+export default function ProductPage({ params }: PageProps) {
+  const [product, setProduct] = React.useState<Product | null>(null);
+  const [loading, setLoading] = React.useState(true);
 
-export default async function ProductPage({ params }: PageProps) {
-  const product = await getProduct(params.id);
+  React.useEffect(() => {
+    async function loadProduct() {
+      try {
+        const data = await getProduct(params.id);
+        setProduct(data);
+      } catch (error) {
+        console.error("Ürün yüklenirken hata oluştu:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadProduct();
+  }, [params.id]);
+
+  if (loading) {
+    return (
+      <Container maxWidth="sm" sx={{ mt: 8 }}>
+        <Paper elevation={3} sx={{ p: 4, textAlign: 'center' }}>
+          <Typography variant="h6">Yükleniyor...</Typography>
+        </Paper>
+      </Container>
+    );
+  }
 
   if (!product) {
     return (

@@ -1,23 +1,56 @@
-import Image from "next/image";
-import Link from "next/link";
+'use client';
+
+import React from 'react';
+import Link from 'next/link';
+import { 
+  AppBar, 
+  Toolbar, 
+  Typography, 
+  Container, 
+  Button,
+  Box 
+} from '@mui/material';
+import { BakeryDining } from '@mui/icons-material';
 
 export default function Header() {
   return (
-    <header>
-      <nav className="flex justify-around items-center bg-[#D8D2C2] text-[#4A4947]  h-10 shadow-md">
-        <Link href="/" className="text-lg flex items-center gap-2 ">
-          <Image
-            src="/images/kruvasan.svg"
-            alt="logo"
-            width={50}
-            height={50}
-
-          />
-          Ana səhifə
-        </Link>
-        <Link href="/products">Məhsullar</Link>
-        <Link href="#">Haqqımızda</Link>
-      </nav>
-    </header>
+    <AppBar position="static" sx={{ bgcolor: '#795757' }}>
+      <Container maxWidth="lg">
+        <Toolbar disableGutters>
+          <BakeryDining sx={{ mr: 2 }} />
+          <Typography
+            variant="h6"
+            noWrap
+            component={Link}
+            href="/"
+            sx={{
+              mr: 2,
+              fontWeight: 700,
+              color: 'inherit',
+              textDecoration: 'none',
+              flexGrow: 1
+            }}
+          >
+            BREAD DELIGHTS
+          </Typography>
+          <Box>
+            <Button
+              component={Link}
+              href="/"
+              sx={{ color: 'white' }}
+            >
+              Ana Sayfa
+            </Button>
+            <Button
+              component={Link}
+              href="/products"
+              sx={{ color: 'white' }}
+            >
+              Ürünler
+            </Button>
+          </Box>
+        </Toolbar>
+      </Container>
+    </AppBar>
   );
 }

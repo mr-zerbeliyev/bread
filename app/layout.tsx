@@ -1,13 +1,19 @@
-import type { Metadata } from "next";
+'use client';
+
+import './globals.css';
 import { Inter } from "next/font/google";
-import "./globals.css";
+import type { Metadata } from "next";
 import Header from "@/components/header";
-import Footer from "@/components/footer";
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 
 const inter = Inter({ subsets: ["latin"] });
+
+export const metadata: Metadata = {
+  title: "Bread Delights",
+  description: "Taze ve lezzetli ekmekler",
+};
 
 const theme = createTheme({
   palette: {
@@ -19,32 +25,23 @@ const theme = createTheme({
     },
   },
   typography: {
-    fontFamily: 'inherit',
+    fontFamily: inter.style.fontFamily,
   },
 });
 
-export const metadata: Metadata = {
-  title: {
-    default: "B R E A D",
-    template: `B R E A D`,
-  },
-  description: "B R E A D",
-};
-
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="tr" className={inter.className}>
       <body suppressHydrationWarning>
-        <AppRouterCacheProvider>
+        <AppRouterCacheProvider options={{ enableCssLayer: true }}>
           <ThemeProvider theme={theme}>
             <CssBaseline />
             <Header />
             <main>{children}</main>
-            {/* <Footer /> */}
           </ThemeProvider>
         </AppRouterCacheProvider>
       </body>
