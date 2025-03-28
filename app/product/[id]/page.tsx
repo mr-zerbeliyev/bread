@@ -3,65 +3,50 @@
 import React from 'react';
 import Image from "next/image";
 import { Product } from "@/app/types/product";
-import { Metadata } from "next";
-import path from 'path';
-import fs from 'fs/promises';
 import { 
   Container, 
   Paper, 
   Typography, 
   Box, 
   Button,
-  Grid,
   Card,
   CardMedia,
   CardContent,
-  CardActions
+  CardActions,
+  Stack
 } from '@mui/material';
 import { ShoppingCart } from '@mui/icons-material';
 
-async function getProduct(id: string): Promise<Product | null> {
-  try {
-    const filePath = path.join(process.cwd(), 'public', 'data', 'product.json');
-    const jsonData = await fs.readFile(filePath, 'utf8');
-    const products: Product[] = JSON.parse(jsonData);
-    const product = products.find(p => p.id.toString() === id);
-    return product || null;
-  } catch (error) {
-    console.error("Ürün verisi okuma hatası:", error);
-    return null;
-  }
-}
-
-export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
-  const product = await getProduct(params.id);
-  return {
-    title: product ? product.name : 'Ürün Bulunamadı',
-    description: product ? product.description : 'Ürün bulunamadı',
-  };
-}
-
 interface PageProps {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
 
 export default function ProductPage({ params }: PageProps) {
+  const resolvedParams = React.use(params);
   const [product, setProduct] = React.useState<Product | null>(null);
   const [loading, setLoading] = React.useState(true);
+  const [error, setError] = React.useState<string | null>(null);
 
   React.useEffect(() => {
     async function loadProduct() {
       try {
-        const data = await getProduct(params.id);
+        const response = await fetch(`/api/products/${resolvedParams.id}`);
+        if (!response.ok) {
+          if (response.status === 404) {
+            throw new Error('Ürün bulunamadı');
+          }
+          throw new Error('Ürün yüklenirken bir hata oluştu');
+        }
+        const data = await response.json();
         setProduct(data);
-      } catch (error) {
-        console.error("Ürün yüklenirken hata oluştu:", error);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "Bilinmeyen bir hata oluştu");
       } finally {
         setLoading(false);
       }
     }
     loadProduct();
-  }, [params.id]);
+  }, [resolvedParams.id]);
 
   if (loading) {
     return (
@@ -73,7 +58,7 @@ export default function ProductPage({ params }: PageProps) {
     );
   }
 
-  if (!product) {
+  if (error || !product) {
     return (
       <Container maxWidth="sm" sx={{ mt: 8 }}>
         <Paper elevation={3} sx={{ p: 4, textAlign: 'center' }}>
@@ -81,7 +66,7 @@ export default function ProductPage({ params }: PageProps) {
             Ürün Bulunamadı
           </Typography>
           <Typography variant="body1" color="text.secondary">
-            Bu ürün mevcut değil.
+            {error || "Bu ürün mevcut değil."}
           </Typography>
         </Paper>
       </Container>
@@ -90,26 +75,30 @@ export default function ProductPage({ params }: PageProps) {
 
   return (
     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-      <Grid container spacing={4}>
-        <Grid item xs={12} md={6}>
+      <Stack direction={{ xs: 'column', md: 'row' }} spacing={4}>
+        <Box flex={1}>
           <Card>
-            <Box sx={{ position: 'relative', height: 500 }}>
+            <Box sx={{ position: 'relative', width: '100%', paddingTop: '75%' }}>
               <CardMedia
                 component="div"
-                sx={{ position: 'relative', height: '100%' }}
+                sx={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
               >
                 <Image
                   src={product.image}
                   alt={product.name}
                   fill
-                  style={{ objectFit: 'cover' }}
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  style={{ 
+                    objectFit: 'cover',
+                    borderRadius: '4px'
+                  }}
                   priority
                 />
               </CardMedia>
             </Box>
           </Card>
-        </Grid>
-        <Grid item xs={12} md={6}>
+        </Box>
+        <Box flex={1}>
           <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
             <CardContent sx={{ flexGrow: 1 }}>
               <Typography variant="h4" component="h1" gutterBottom>
@@ -139,8 +128,8 @@ export default function ProductPage({ params }: PageProps) {
               </Button>
             </CardActions>
           </Card>
-        </Grid>
-      </Grid>
+        </Box>
+      </Stack>
     </Container>
   );
 }

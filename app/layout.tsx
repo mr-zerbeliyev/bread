@@ -2,18 +2,12 @@
 
 import './globals.css';
 import { Inter } from "next/font/google";
-import type { Metadata } from "next";
 import Header from "@/components/header";
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 
 const inter = Inter({ subsets: ["latin"] });
-
-export const metadata: Metadata = {
-  title: "Bread Delights",
-  description: "Taze ve lezzetli ekmekler",
-};
 
 const theme = createTheme({
   palette: {
